@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.BookMapper">
+
+
+    <resultMap id="bookMap" type="com.qf.entity.Book">
+        <id property="id" column="id"></id>
+        <result property="bookname" column="bookname"></result>
+        <result property="author" column="author"></result>
+        <result property="price" column="price"></result>
+        <result property="classid" column="classid"></result>
+        <result property="descr" column="descr"></result>
+        <result property="path" column="path"></result>
+
+        <association property="aClass" javaType="com.qf.entity.Class">
+            <id property="id" column="id"></id>
+            <result property="NAME" column="NAME"></result>
+            <result property="descr" column="descr"></result>
+        </association>
+    </resultMap>
+
+<select id="findAllBook" resultMap="bookMap">
+    select * from book,class where class.id=book.classid
+</select>
+    
+    <update id="updateBookById">
+        update book set 
+        <if test="bookname!=null">
+            bookname=#{bookname},
+        </if>
+
+        <if test="author!=null">
+            author=#{author},
+        </if>
+
+        <if test="price!=null">
+            price=#{price},
+        </if>
+
+        <if test="classid!=null">
+            classid=#{classid},
+        </if>
+
+        <if test="descr!=null">
+            descr=#{descr},
+        </if>
+
+        <if test="path!=null">
+            path=#{path}
+        </if>
+
+        where id=#{id}
+    </update>
+
+    <delete id="delBook" parameterType="com.qf.entity.Book">
+        delete from book where id=#{id}
+    </delete>
+
+    <insert id="addBook" parameterType="com.qf.entity.Book">
+        insert into book(bookname,author,price,classid,descr,path) value
+        (#{bookname},#{author},#{price},#{classid},#{descr},#{path})
+    </insert>
+
+
+
+    <select id="selBookById" resultType="com.qf.entity.Book">
+        select * from book where id=#{id}
+    </select>
+
+
+
+</mapper>

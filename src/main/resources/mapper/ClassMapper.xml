@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.ClassMapper">
+    
+<select id="findAllClass" resultType="com.qf.entity.Class">
+    select * from class
+</select>
+
+    <insert id="addClass" parameterType="com.qf.entity.Class">
+        insert into class(`NAME`,descr) value(#{NAME},#{descr})
+    </insert>
+
+    <select id="selClassById" resultType="com.qf.entity.Class">
+        select * from class where id=#{id}
+    </select>
+
+    <update id="updateClassById" parameterType="com.qf.entity.Class">
+        update class set
+        <if test="NAME!=null">
+            `NAME`=#{NAME},
+        </if>
+        <if test="descr!=null">
+            `descr`=#{descr}
+        </if>
+
+        where id=#{id}
+    </update>
+
+    <delete id="delClassById" parameterType="com.qf.entity.Class">
+        delete from class where id=#{id}
+    </delete>
+
+
+
+
+</mapper>
